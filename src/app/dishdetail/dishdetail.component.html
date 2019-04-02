@@ -3,11 +3,11 @@
     fxLayout.sm="column"
     fxLayout.xs="column"
     fxLayoutAlign.gt-md="space-around center"
-    fxLayoutGap="10px" 
+    fxLayoutGap="10px"
     fxLayoutGap.xs="0">
-    
 
-  <div fxFlex="40" *ngIf="dish" [@visibility]="visibility">
+
+  <div fxFlex="40" *ngIf="dish" [@visibility]="visibility" [@expand]>
     <mat-card>
       <mat-card-header>
         <mat-card-title>
@@ -19,13 +19,14 @@
         <p>{{dish.description}}</p>
       </mat-card-content>
       <mat-card-actions>
-        <button mat-button [routerLink]="['/dishdetail', prev]">
-          <span class="fa fa-chevron-left fa-lg"></span>
-        </button>
+
         <button mat-button (click)="goBack()">BACK</button>
         <button mat-button>LIKE</button>
         <button mat-button>SHARE</button>
         <span class="flex-spacer"></span>
+        <button mat-button [routerLink]="['/dishdetail', prev]">
+          <span class="fa fa-chevron-left fa-lg"></span>
+        </button>
         <button mat-button [routerLink]="['/dishdetail', next]">
           <span class="fa fa-chevron-right fa-lg"></span>
         </button>
@@ -37,17 +38,17 @@
     <h4>Loading . . . Please Wait</h4>
   </div>
 
-  <div fxFlex="40" *ngIf="dish" [@visibility]="visibility">
+  <div fxFlex="40" *ngIf="dish" [@visibility]="visibility" [@expand]>
     <h3>Comments</h3>
     <mat-list>
       <mat-list-item *ngFor="let comment of dish.comments">
         <p matLine>{{comment.comment}}</p>
-        <p matLine>{{comment.rating}} Stars</p> 
+        <p matLine>{{comment.rating}} Stars</p>
         <p matLine>-- {{comment.author}} {{comment.date | date}}</p>
       </mat-list-item>
       <mat-list-item *ngIf="commentForm.status == 'VALID'">
           <p matLine >{{ commentForm.controls.comment.value  }}</p>
-          <p matLine> {{ commentForm.controls.rating.value  }} Stars</p> 
+          <p matLine> {{ commentForm.controls.rating.value  }} Stars</p>
           <p matLine>-- {{ commentForm.controls.author.value }}</p>
         </mat-list-item>
     </mat-list>
@@ -61,8 +62,7 @@
     <h4>{{errMess}}</h4>
   </div>
 
-  <div fxFlex="40" class="form-size" *ngIf="dish" [@visibility]="visibility">
-      {{commentForm.value | json }} {{commentForm.controls.author.status}}
+  <div fxFlex="40" class="form-size" *ngIf="dish" [@visibility]="visibility" [@expand]>
     <form novalidate [formGroup]="commentForm" (ngSubmit)="onSubmit()">
       <p>
         <mat-form-field class="half-width">

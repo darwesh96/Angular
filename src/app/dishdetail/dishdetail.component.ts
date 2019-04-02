@@ -6,32 +6,28 @@ import { DishService } from '../services/dish.service';
 import { switchMap } from 'rxjs/operators';
 import { FormBuilder, FormGroup, Validators, FormGroupDirective } from '@angular/forms';
 import { Comment } from '../shared/comment';
-import { trigger, state, style, animate, transition } from '@angular/animations';
+import { visibility, flyInOut, expand } from '../animations/app.animation';
 
 @Component({
   selector: 'app-dishdetail',
   templateUrl: './dishdetail.component.html',
   styleUrls: ['./dishdetail.component.scss'],
+  host: {
+    '[@flyInOut]': 'true',
+    'style': 'display: block;'
+    },
   animations: [
-    trigger('visibility', [
-        state('shown', style({
-            transform: 'scale(1.0)',
-            opacity: 1
-        })),
-        state('hidden', style({
-            transform: 'scale(0.5)',
-            opacity: 0
-        })),
-        transition('* => *', animate('0.5s ease-in-out'))
-    ])
+    visibility(),
+    flyInOut(),
+    expand()
+
   ]
-  
-  
+
 })
 export class DishdetailComponent implements OnInit {
 
   @ViewChild(FormGroupDirective) formGroupDirective: FormGroupDirective;
-  
+
   dish: Dish;
   dishIds : string[];
   prev: string;
@@ -80,7 +76,7 @@ export class DishdetailComponent implements OnInit {
       author: ['',[Validators.required, Validators.minLength(2),Validators.maxLength(25)]],
       rating: 5,
       comment: ['', Validators.required],
-      
+
     });
     this.commentForm.valueChanges
     .subscribe(data => this.onValueChanged(data));
@@ -119,17 +115,17 @@ export class DishdetailComponent implements OnInit {
   }
 
   onSubmit(){
-    
+
     this.comment = this.commentForm.value;
     console.log(this.comment);
-     
+
     this.formGroupDirective.resetForm({
       author: '',
       rating: 5,
       comment: '',
       date:''
     });
-   
+
 
     var d = new Date();
     var n = d.toISOString();
